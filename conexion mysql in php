@@ -1,0 +1,32 @@
+<?php
+  class funciones{
+    public function conexion($accion, $comando){
+      $usuario = "root";
+      $password = "";
+      $servidor = "localhost";
+      $basedatos = "prueba1";
+
+      $conexion = mysqli_connect($servidor,$usuario,$password);
+      $db = mysqli_select_db($conexion, $basedatos);
+
+      switch($accion){
+        case 'login':
+          $resultado = mysqli_query($conexion,$comando);
+          if($resultado){
+            return "true";
+          }else{
+            return "false";
+          }
+          break;
+      }
+
+    }
+
+    public function logeo($usuario,$contrasena){
+      $comando = "select * from tbl_usuarios
+          where nombre_usuario = '$usuario' and contrasena_usuario = '$contrasena';";
+      $resultado = $this->conexion('login',$comando);
+      return $resultado;
+    }
+  }
+?>
